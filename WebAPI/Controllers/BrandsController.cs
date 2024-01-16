@@ -14,7 +14,7 @@ namespace WebAPI.Controllers
         public BrandsController()
         {
             //Her Http Request için yeni bir Controller nesnesi oluşturulur.
-            //şuan bir class açıp static yaptık, bu referansın 1 tane odluğunu söylüyor, sürekli newlemez ve veriyi tutar.
+            //şuan bir cilass açıp static yaptık, bu referansın 1 tane odluğunu söylüyor, sürekli newlemez ve veriyi tutar.
             _brandService = ServiceRegistration.BrandService;
             //IBrandDal brandDal = new InMemoryBrandDal();
             //_brandService = new BrandManager(brandDal);// Daha sonra IoC yapısını kurduğumuzda dependency injection ile daha verimli hale getiricez.
