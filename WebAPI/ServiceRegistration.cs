@@ -21,6 +21,7 @@ namespace WebAPI
             cfg.CreateMap<Brand, AddBrandResponse>();
         }).CreateMapper();
         public static readonly IBrandService BrandService = new BrandManager(BrandDal, BrandBusinessRules, Mapper);
-        //IoC yapımızı kurduğu
+        //IoC yapımızı kurduğumuzda dependency injection ile daha verimli hale gelecek.
+
     }
 }

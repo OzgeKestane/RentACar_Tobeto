@@ -8,7 +8,7 @@ namespace Entities.Concrete
     {
         //Entityden alacak Id'yi burada yazmaya gerek yok
         //public int Id { get; set; }
-        public string Name { get; set; }
+        public string Name { get; set; } = null!;
         public Brand()
         {
 
