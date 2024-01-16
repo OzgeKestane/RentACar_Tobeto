@@ -2,8 +2,8 @@
 using Business.Abstract;
 using Business.BusinessRules;
 using Business.Concrete;
-using Business.Request.Brand;
-using Business.Responses.Brand;
+using Business.Request.Fuel;
+using Business.Responses.Fuel;
 using DataAccess.Abstract;
 using DataAccess.Concrete.InMemory;
 using Entities.Concrete;

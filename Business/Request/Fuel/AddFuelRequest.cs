@@ -1,4 +1,4 @@
-﻿namespace Business.Request.Brand
+﻿namespace Business.Request.Fuel
 {
     public class AddFuelRequest
     {

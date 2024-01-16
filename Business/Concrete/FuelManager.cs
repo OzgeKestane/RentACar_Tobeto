@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using Business.Abstract;
 using Business.BusinessRules;
-using Business.Request.Brand;
-using Business.Responses.Brand;
+using Business.Request.Fuel;
+using Business.Responses.Fuel;
 using DataAccess.Abstract;
 using Entities.Concrete;
 

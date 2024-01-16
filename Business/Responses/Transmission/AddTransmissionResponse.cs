@@ -1,15 +1,17 @@
-﻿namespace Business.Responses.Brand
+﻿namespace Business.Responses.Transmission
 {
-    public class AddFuelResponse
+    public class AddTransmissionResponse
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public DateTime CreatedAt { get; set; }
-        public AddFuelResponse(int id, string name, DateTime createdAt)
+        public AddTransmissionResponse(int id, string name, DateTime createdAt)
         {
             Id = id;
             Name = name;
+
             CreatedAt = createdAt;
+
         }
     }
 }

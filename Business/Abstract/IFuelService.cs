@@ -1,5 +1,5 @@
-﻿using Business.Request.Brand;
-using Business.Responses.Brand;
+﻿using Business.Request.Fuel;
+using Business.Responses.Fuel;
 using Entities.Concrete;
 
 namespace Business.Abstract
