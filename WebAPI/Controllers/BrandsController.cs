@@ -1,7 +1,7 @@
-﻿using Business.Abstract;
+﻿using Business;
+using Business.Abstract;
 using Business.Request.Brand;
 using Business.Responses.Brand;
-using Entities.Concrete;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
@@ -11,11 +11,12 @@ namespace WebAPI.Controllers
     public class BrandsController : ControllerBase
     {
         private readonly IBrandService _brandService;
-        public BrandsController()
+        public BrandsController(IBrandService brandService)
         {
             //Her Http Request için yeni bir Controller nesnesi oluşturulur.
             //şuan bir cilass açıp static yaptık, bu referansın 1 tane odluğunu söylüyor, sürekli newlemez ve veriyi tutar.
-            _brandService = ServiceRegistration.BrandService;
+            _brandService = brandService;
+            //ServiceRegistration.BrandService;
             //IBrandDal brandDal = new InMemoryBrandDal();
             //_brandService = new BrandManager(brandDal);// Daha sonra IoC yapısını kurduğumuzda dependency injection ile daha verimli hale getiricez.
         }
@@ -35,10 +36,10 @@ namespace WebAPI.Controllers
         //}
         //sadece 200 dönecekse
         [HttpGet]
-        public ICollection<Brand> GetList()
+        public GetBrandListResponse GetList([FromQuery] GetBrandListRequest request)
         {
-            IList<Brand> brandList = _brandService.GetList();
-            return brandList; //JSON
+            GetBrandListResponse response = _brandService.GetList(request);
+            return response; //JSON
         }
 
         //[HttpPost("/add")]//endpoint http://localhost:5031/api/brands/add

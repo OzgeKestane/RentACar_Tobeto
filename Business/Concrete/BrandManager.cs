@@ -31,7 +31,7 @@ namespace Business.Concrete
             //Transaction vs..
             // Brand addedBrand=
 
-            Brand brandToAdd = _mapper.Map<Brand>(request);   //mapping    //new(request.name) elle newlemek yerine mappleme özelliğini kullanıyoruz.          
+            Brand brandToAdd = _mapper.Map<Brand>(request);   //mapping    //new(request.name) elle newlemek yerine mappleme özelliğini kullanıyoruz.         //aynı işlemde eşleşen kısımları, Brand nesnesinde oluşturuyor  
             _brandDal.Add(brandToAdd);
 
             //Mapping
@@ -39,7 +39,7 @@ namespace Business.Concrete
             return response;
         }
 
-        public IList<Brand> GetList()
+        public GetBrandListResponse GetList(GetBrandListRequest rrequest)
         {
             //İş kodları
             //validation
@@ -47,7 +47,12 @@ namespace Business.Concrete
             //Cache
             //Transaction vs..
             IList<Brand> brandList = _brandDal.GetList();
-            return brandList;
+            //Brand -> BrandListItemDto
+            //IList<BrandListItemDto> -> GetBrandListResponseList<BrandListItemDto>
+            //brandList.Items diye bir alan yok bu yüzden mapping yapılacak
+
+            GetBrandListResponse response = _mapper.Map<GetBrandListResponse>(brandList);
+            return response;
         }
 
         //AddBrandResponse IBrandService.Add(AddBrandRequest request)

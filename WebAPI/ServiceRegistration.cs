@@ -9,7 +9,7 @@ using DataAccess.Concrete.InMemory;
 using Entities.Concrete;
 
 namespace WebAPI
-{
+{ //BU CLASSI SİLEBİLİRİZ, PROGRAMCSDE AYNI İŞLEMLERİ KISAYOLDAN YAPTIK
     public static class ServiceRegistration
     {//readonly dışarıdan atama yapılmasın diye
 
