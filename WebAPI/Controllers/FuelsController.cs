@@ -1,7 +1,7 @@
-﻿using Business.Abstract;
+﻿using Business;
+using Business.Abstract;
 using Business.Request.Fuel;
 using Business.Responses.Fuel;
-using Entities.Concrete;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
@@ -11,16 +11,16 @@ namespace WebAPI.Controllers
     public class FuelsController : ControllerBase
     {
         private readonly IFuelService _fuelService;
-        public FuelsController()
+        public FuelsController(IFuelService fuelService)
         {
-            _fuelService = FuelServiceRegistration.FuelService;
+            _fuelService = fuelService;
         }
 
         [HttpGet]
-        public ICollection<Fuel> GetList()
+        public GetFuelListResponse GetList([FromQuery] GetFuelListRequest request)
         {
-            IList<Fuel> fuelList = _fuelService.GetList();
-            return fuelList;
+            GetFuelListResponse response = _fuelService.GetList(request);
+            return response;
         }
 
         [HttpPost]

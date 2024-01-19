@@ -31,11 +31,14 @@ namespace Business.Concrete
             AddFuelResponse response = _mapper.Map<AddFuelResponse>(fuelToAdd);
             return response;
         }
-        public IList<Fuel> GetList()
+
+
+        public GetFuelListResponse GetList(GetFuelListRequest request)
         {
             IList<Fuel> fuelList = _fuelDal.GetList();
-            return fuelList;
-        }
+            GetFuelListResponse response = _mapper.Map<GetFuelListResponse>(fuelList);
+            return response;
 
+        }
     }
 }

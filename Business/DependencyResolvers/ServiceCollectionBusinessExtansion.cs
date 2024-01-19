@@ -21,10 +21,12 @@ namespace Business.DependencyResolvers
                 .AddSingleton<IBrandService, BrandManager>()
                 .AddSingleton<IBrandDal, InMemoryBrandDal>()
                 .AddSingleton<BrandBusinessRules>();
+            services.AddSingleton<IFuelService, FuelManager>().AddSingleton<IFuelDal, InMemoryFuelDal>().AddSingleton<FuelBusinessRules>();
 
             services.AddAutoMapper(Assembly.GetExecutingAssembly()); //fluent yapısı yazım şekli
             return services;
 
         }
+
     }
 }

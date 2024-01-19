@@ -39,7 +39,7 @@ namespace Business.Concrete
             return response;
         }
 
-        public GetBrandListResponse GetList(GetBrandListRequest rrequest)
+        public GetBrandListResponse GetList(GetBrandListRequest request)
         {
             //İş kodları
             //validation

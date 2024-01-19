@@ -23,6 +23,13 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddBusinessServices();
 
+//builder.Services.AddSingleton<IFuelService, FuelManager>();
+//builder.Services.AddSingleton<IFuelDal, InMemoryFuelDal>();
+//builder.Services.AddSingleton<BrandBusinessRules>();
+
+//builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
+
+
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
