@@ -1,5 +1,4 @@
-﻿using Business;
-using Business.Abstract;
+﻿using Business.Abstract;
 using Business.Request.Brand;
 using Business.Responses.Brand;
 using Microsoft.AspNetCore.Mvc;
@@ -46,9 +45,36 @@ namespace WebAPI.Controllers
         [HttpPost] //POST http://localhost:5031/api/brands
         public ActionResult<AddBrandResponse> Add(AddBrandRequest request)
         {
-            AddBrandResponse response = _brandService.Add(request);
-            //return response;//200 OK
-            return CreatedAtAction(nameof(GetList), response); // 201 Created dönecek
+            try
+            {
+                AddBrandResponse response = _brandService.Add(request);
+                //return response;//200 OK
+                return CreatedAtAction(nameof(GetList), response); // 201 Created dönecek
+            }
+            catch (Core.CrossCuttingConcerns.Exceptions.BusinessException exception)
+            {
+                return BadRequest(new Core.CrossCuttingConcerns.Exceptions.BusinessProblemDetails()
+                {
+                    Title = "Business Exceptions",
+                    Status = StatusCodes.Status400BadRequest,
+                    Detail = exception.Message,
+                    Instance = HttpContext.Request.Path
+
+                });
+            }
+        }
+        [HttpPut("/update")]
+        public UpdateBrandResponse Update(UpdateBrandRequest request, int id)
+        {
+            UpdateBrandResponse brandResponse = _brandService.Update(id, request);
+            return brandResponse;
+        }
+
+        [HttpDelete("/delete")]
+        public DeleteBrandResponse Delete(int id)
+        {
+            DeleteBrandResponse deleteBrandResponse = _brandService.Delete(id);
+            return deleteBrandResponse;
         }
     }
 }

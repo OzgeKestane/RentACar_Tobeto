@@ -1,5 +1,4 @@
-﻿using Business;
-using Business.Abstract;
+﻿using Business.Abstract;
 using Business.Request.Fuel;
 using Business.Responses.Fuel;
 using Microsoft.AspNetCore.Mvc;
@@ -28,9 +27,38 @@ namespace WebAPI.Controllers
 
         public ActionResult<AddFuelResponse> Add(AddFuelRequest request)
         {
-            AddFuelResponse response = _fuelService.Add(request);
-            //return response;//200 OK
-            return CreatedAtAction(nameof(GetList), response); // 201 Created dönecek
+            try
+            {
+                AddFuelResponse response = _fuelService.Add(request);
+                //return response;//200 OK
+                return CreatedAtAction(nameof(GetList), response); // 201 Created dönecek
+            }
+            catch (Core.CrossCuttingConcerns.Exceptions.BusinessException exception)
+            {
+                return BadRequest(new Core.CrossCuttingConcerns.Exceptions.BusinessProblemDetails()
+                {
+                    Title = "Business Exceptions",
+                    Status = StatusCodes.Status400BadRequest,
+                    Detail = exception.Message,
+                    Instance = HttpContext.Request.Path
+
+                });
+            }
+
+
+        }
+        [HttpPut("{id}")]
+        public UpdateFuelResponse Update(UpdateFuelRequest request, int id)
+        {
+            UpdateFuelResponse update = _fuelService.Update(id, request);
+            return update;
+
+        }
+        [HttpDelete("{id}")]
+        public DeleteFuelResponse Delete(int id)
+        {
+            DeleteFuelResponse delete = _fuelService.Delete(id);
+            return delete;
         }
     }
 }

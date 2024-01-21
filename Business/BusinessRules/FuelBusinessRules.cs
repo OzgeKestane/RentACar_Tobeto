@@ -1,4 +1,5 @@
 ﻿using DataAccess.Abstract;
+using Entities.Concrete;
 
 namespace Business.BusinessRules
 {
@@ -20,6 +21,12 @@ namespace Business.BusinessRules
             }
 
         }
+        public Fuel FindFuelId(int id)
+        {
+            Fuel fuel = _fuelDal.GetList().SingleOrDefault(b => b.Id == id);
+            return fuel;
+        }
+
 
     }
 

@@ -32,6 +32,13 @@ namespace Business.Concrete
             return response;
         }
 
+        public DeleteFuelResponse Delete(int id)
+        {
+            Fuel fuelToDelete = _fuelBusinessRules.FindFuelId(id);
+            fuelToDelete.DeletedAt = DateTime.Now;
+            DeleteFuelResponse response = _mapper.Map<DeleteFuelResponse>(fuelToDelete);
+            return response;
+        }
 
         public GetFuelListResponse GetList(GetFuelListRequest request)
         {
@@ -39,6 +46,16 @@ namespace Business.Concrete
             GetFuelListResponse response = _mapper.Map<GetFuelListResponse>(fuelList);
             return response;
 
+        }
+
+        public UpdateFuelResponse Update(int id, UpdateFuelRequest request)
+        {
+            Fuel fuelToUpdate = _fuelBusinessRules.FindFuelId(id);
+            fuelToUpdate.Name = request.Name;
+            fuelToUpdate.UpdatedAt = DateTime.Now;
+
+            UpdateFuelResponse response = _mapper.Map<UpdateFuelResponse>(fuelToUpdate);
+            return response;
         }
     }
 }

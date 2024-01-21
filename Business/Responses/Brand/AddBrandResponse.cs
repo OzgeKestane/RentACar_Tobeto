@@ -11,5 +11,9 @@
             Name = name;
             CreatedAt = createdAt;
         }
+        public AddBrandResponse()
+        {
+
+        }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using Business.Dtos.Fuel;
 
-namespace Business
+namespace Business.Responses.Fuel
 {
     public class GetFuelListResponse
     {

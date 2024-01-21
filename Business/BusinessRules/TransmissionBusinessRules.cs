@@ -1,4 +1,5 @@
 ﻿using DataAccess.Abstract;
+using Entities.Concrete;
 
 namespace Business.BusinessRules
 {
@@ -17,5 +18,11 @@ namespace Business.BusinessRules
                 throw new Exception("Transmission already exists.");
             }
         }
+        public Transmission FindTransmissionId(int id)
+        {
+            Transmission transmission = _transmissionDal.GetList().SingleOrDefault(b => b.Id == id);
+            return transmission;
+        }
+
     }
 }

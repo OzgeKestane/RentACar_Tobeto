@@ -1,4 +1,6 @@
-﻿using DataAccess.Abstract;
+﻿using Core.CrossCuttingConcerns.Exceptions;
+using DataAccess.Abstract;
+using Entities.Concrete;
 
 namespace Business.BusinessRules
 {
@@ -15,8 +17,17 @@ namespace Business.BusinessRules
 
             if (isExists)
             {
-                throw new Exception("Brand already exists.");
+                throw new BusinessException("Brand already exists.");
             }
+
         }
+
+        public Brand FindBrandId(int id)
+        {
+            Brand brand = _brandDal.GetList().SingleOrDefault(b => b.Id == id);
+            return brand;
+        }
+
+
     }
 }

@@ -1,4 +1,5 @@
 using Business.DependencyResolvers;
+using Core.CrossCuttingConcerns.Exceptions;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +24,8 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddBusinessServices();
 
+
+
 //builder.Services.AddSingleton<IFuelService, FuelManager>();
 //builder.Services.AddSingleton<IFuelDal, InMemoryFuelDal>();
 //builder.Services.AddSingleton<BrandBusinessRules>();
@@ -36,7 +39,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+
 var app = builder.Build();
+app.UseGlobalExceptionHandling();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -50,5 +55,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+//app.UseMiddleware<ExceptionMiddleware>();
 
 app.Run();

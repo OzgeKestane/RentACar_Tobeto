@@ -1,4 +1,4 @@
-﻿namespace Business
+﻿namespace Business.Request.Brand
 {
     public class GetBrandListRequest
     {

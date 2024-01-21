@@ -22,6 +22,16 @@ namespace Business.DependencyResolvers
                 .AddSingleton<IBrandDal, InMemoryBrandDal>()
                 .AddSingleton<BrandBusinessRules>();
             services.AddSingleton<IFuelService, FuelManager>().AddSingleton<IFuelDal, InMemoryFuelDal>().AddSingleton<FuelBusinessRules>();
+            services
+                .AddSingleton<ITransmissionService, TransmissionManager>()
+                .AddSingleton<ITransmissionDal, InMemoryTransmissionDal>()
+                .AddSingleton<TransmissionBusinessRules>();
+            services.AddSingleton<IModelService, ModelManager>();
+            services.AddSingleton<IModelDal, InMemoryModelDal>();
+            services.AddSingleton<ModelBusinessRules>();
+            services.AddSingleton<ICarService, CarManager>();
+            services.AddSingleton<ICarDal, InMemoryCarDal>();
+            services.AddSingleton<CarBusinessRules>();
 
             services.AddAutoMapper(Assembly.GetExecutingAssembly()); //fluent yapısı yazım şekli
             return services;

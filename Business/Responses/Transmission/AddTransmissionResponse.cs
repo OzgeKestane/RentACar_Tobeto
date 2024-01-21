@@ -13,5 +13,9 @@
             CreatedAt = createdAt;
 
         }
+        public AddTransmissionResponse()
+        {
+
+        }
     }
 }

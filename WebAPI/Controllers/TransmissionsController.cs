@@ -1,7 +1,6 @@
 ﻿using Business.Abstract;
 using Business.Request.Transmission;
 using Business.Responses.Transmission;
-using Entities.Concrete;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
@@ -11,23 +10,51 @@ namespace WebAPI.Controllers
     public class TransmissionsController : ControllerBase
     {
         public readonly ITransmissionService _transmissionService;
-        public TransmissionsController()
+        public TransmissionsController(ITransmissionService service)
         {
-            _transmissionService = TransmissionServiceRegistration.TransmissionService;
+            _transmissionService = service;
         }
         [HttpGet]
-        public ICollection<Transmission> GetList()
+        public GetTransmissionListResponse GetList([FromQuery] GetTransmissionListRequest request)
         {
-            IList<Transmission> list = _transmissionService.GetList();
-            return list;
+            GetTransmissionListResponse response = _transmissionService.GetList(request);
+            return response;
 
         }
         [HttpPost]
         public ActionResult<AddTransmissionResponse> Add(AddTransmissionRequest request)
         {
-            AddTransmissionResponse response = _transmissionService.Add(request);
-            return CreatedAtAction("GetList", response);
-        }
+            try
+            {
+                AddTransmissionResponse response = _transmissionService.Add(request);
 
+                return CreatedAtAction(nameof(GetList), response);
+            }
+            catch (Core.CrossCuttingConcerns.Exceptions.BusinessException exception)
+            {
+                return BadRequest(new Core.CrossCuttingConcerns.Exceptions.BusinessProblemDetails()
+                {
+                    Title = "Business Exceptions",
+                    Status = StatusCodes.Status400BadRequest,
+                    Detail = exception.Message,
+                    Instance = HttpContext.Request.Path
+
+                });
+            }
+            //AddTransmissionResponse response = _transmissionService.Add(request);
+            //return CreatedAtAction("GetList", response);
+        }
+        [HttpPut("{id}")]
+        public UpdateTransmissionResponse Update(UpdateTransmissionRequest request, int id)
+        {
+            UpdateTransmissionResponse update = _transmissionService.Update(id, request);
+            return update;
+        }
+        [HttpDelete("{id}")]
+        public DeleteTransmissionResponse Delete(int id)
+        {
+            DeleteTransmissionResponse delete = _transmissionService.Delete(id);
+            return delete;
+        }
     }
 }

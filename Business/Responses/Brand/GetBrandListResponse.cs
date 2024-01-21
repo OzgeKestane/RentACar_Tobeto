@@ -1,6 +1,6 @@
 ﻿using Business.Dtos.Brand;
 
-namespace Business
+namespace Business.Responses.Brand
 {
     public class GetBrandListResponse
     {

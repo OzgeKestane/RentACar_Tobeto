@@ -39,6 +39,17 @@ namespace Business.Concrete
             return response;
         }
 
+
+
+        public DeleteBrandResponse Delete(int id)
+        {
+            Brand brandToDelete = _brandBusinessRules.FindBrandId(id);
+            brandToDelete.DeletedAt = DateTime.Now;
+            DeleteBrandResponse response = _mapper.Map<DeleteBrandResponse>(brandToDelete);
+            return response;
+
+        }
+
         public GetBrandListResponse GetList(GetBrandListRequest request)
         {
             //İş kodları
@@ -54,6 +65,22 @@ namespace Business.Concrete
             GetBrandListResponse response = _mapper.Map<GetBrandListResponse>(brandList);
             return response;
         }
+
+
+
+        public UpdateBrandResponse Update(int id, UpdateBrandRequest request)
+        {
+
+            Brand brandToUpdate = _brandBusinessRules.FindBrandId(id);
+            brandToUpdate.Name = request.Name;
+            brandToUpdate.UpdatedAt = DateTime.Now;
+            UpdateBrandResponse response = _mapper.Map<UpdateBrandResponse>(brandToUpdate);
+            return response;
+
+
+        }
+
+
 
         //AddBrandResponse IBrandService.Add(AddBrandRequest request)
         //{

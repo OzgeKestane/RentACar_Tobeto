@@ -30,10 +30,31 @@ namespace Business.Concrete
 
         }
 
-        public IList<Transmission> GetList()
+        public DeleteTransmissionResponse Delete(int id)
+        {
+            Transmission transmissionToDelete = _transmissionBusinessRules.FindTransmissionId(id);
+            transmissionToDelete.DeletedAt = DateTime.Now;
+            DeleteTransmissionResponse response = _mapper.Map<DeleteTransmissionResponse>(transmissionToDelete);
+            return response;
+
+        }
+
+        public GetTransmissionListResponse GetList(GetTransmissionListRequest request)
         {
             IList<Transmission> transmissionList = _transmissionDal.GetList();
-            return transmissionList;
+            GetTransmissionListResponse response = _mapper.Map<GetTransmissionListResponse>(transmissionList);
+            return response;
+        }
+
+        public UpdateTransmissionResponse Update(int id, UpdateTransmissionRequest request)
+        {
+            Transmission transmissionToUpdate = _transmissionBusinessRules.FindTransmissionId(id);
+            transmissionToUpdate.Name = request.Name;
+            transmissionToUpdate.UpdatedAt = DateTime.Now;
+
+            UpdateTransmissionResponse response = _mapper.Map<UpdateTransmissionResponse>(transmissionToUpdate);
+            return response;
+
         }
     }
 }
