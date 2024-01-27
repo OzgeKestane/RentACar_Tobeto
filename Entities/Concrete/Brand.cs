@@ -17,5 +17,6 @@ namespace Entities.Concrete
         {
             Name = name;
         }
+
     }
 }

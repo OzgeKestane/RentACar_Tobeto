@@ -22,7 +22,7 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 //ManageNuget Automapper microsoft dependencyinjection indirdik//Serviceregistration sildiðim için bu mapperlerý businesse (klasör) ekledik. 
 //addTransient
 
-builder.Services.AddBusinessServices();
+builder.Services.AddBusinessServices(builder.Configuration);
 
 
 
@@ -41,7 +41,8 @@ builder.Services.AddSwaggerGen();
 
 
 var app = builder.Build();
-app.UseGlobalExceptionHandling();
+if (app.Environment.IsProduction())
+    app.UseGlobalExceptionHandling();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

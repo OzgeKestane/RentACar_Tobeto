@@ -1,33 +1,63 @@
 ﻿using DataAccess.Abstract;
+using DataAccess.Concrete.EntityFramework.Contexts;
 using Entities.Concrete;
+using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess.Concrete.EntityFramework
 {
     public class EfModelDal : IModelDal
     {
-        public void Add(Model entity)
+        private readonly RentACarContext _context;
+
+        public EfModelDal(RentACarContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
         }
 
-        public void Delete(Model entity)
+        public Model Add(Model entity)
         {
-            throw new NotImplementedException();
+            entity.CreatedAt = DateTime.UtcNow;
+            _context.Entry(entity).State = EntityState.Added;
+
+            _context.Models.Add(entity);
+
+            _context.SaveChanges();
+            return entity;
         }
 
-        public Model? GetById(int id)
+        public Model Delete(Model entity, bool isSoftDelete = true)
         {
-            throw new NotImplementedException();
+            entity.DeletedAt = DateTime.UtcNow;
+            if (!isSoftDelete)
+                _context.Models.Remove(entity);
+            //_context.Entry(entity).State = EntityState.Modified;
+            _context.SaveChanges();
+            return entity;
         }
 
-        public IList<Model> GetList()
+        public Model? Get(Func<Model, bool> predicate)
         {
-            throw new NotImplementedException();
+            Model? model = _context.Models.FirstOrDefault(predicate);//örn. FirstOrDefault() metodu veritabanına sorguyu çalıştırır
+            return model;
         }
 
-        public void Update(Model entity)
+        public IList<Model> GetList(Func<Model, bool>? predicate = null)
         {
-            throw new NotImplementedException();
+            IQueryable<Model> query = _context.Set<Model>();
+            if (predicate != null)
+            {
+                query = query.Where(predicate).AsQueryable();
+            }
+
+            return query.ToList(); //örn. ToList() metodu veritabanına sorguyu çalıştırır
+        }
+
+        public Model Update(Model entity)
+        {
+            entity.UpdatedAt = DateTime.UtcNow;
+            _context.Models.Update(entity);
+            _context.SaveChanges();
+            return entity;
         }
     }
 }

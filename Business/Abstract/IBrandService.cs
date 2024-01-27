@@ -6,7 +6,7 @@ namespace Business.Abstract;
 public interface IBrandService
 {
     public AddBrandResponse Add(AddBrandRequest request);
-    public UpdateBrandResponse Update(int id, UpdateBrandRequest request);
-    public DeleteBrandResponse Delete(int id);
+    public UpdateBrandResponse Update(UpdateBrandRequest request);
+    public DeleteBrandResponse Delete(DeleteBrandRequest request);
     public GetBrandListResponse GetList(GetBrandListRequest request);
 }

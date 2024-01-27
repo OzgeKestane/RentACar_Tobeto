@@ -6,8 +6,8 @@ namespace Business.Abstract
     public interface ICarService
     {
         public AddCarResponse Add(AddCarRequest request);
-        public UpdateCarResponse Update(UpdateCarRequest request, int id);
-        public DeleteCarResponse Delete(int id);
+        public UpdateCarResponse Update(UpdateCarRequest request);
+        public DeleteCarResponse Delete(DeleteCarRequest request);
         public GetCarListResponse GetList(GetCarListRequest request);
     }
 }

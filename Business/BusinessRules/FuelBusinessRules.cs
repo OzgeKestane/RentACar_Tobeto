@@ -1,4 +1,5 @@
-﻿using DataAccess.Abstract;
+﻿using Core.CrossCuttingConcerns.Exceptions;
+using DataAccess.Abstract;
 using Entities.Concrete;
 
 namespace Business.BusinessRules
@@ -27,7 +28,11 @@ namespace Business.BusinessRules
             return fuel;
         }
 
-
+        public void CheckIfFuelExists(Fuel? fuel)
+        {
+            if (fuel is null)
+                throw new NotFoundException("Fuel not found.");
+        }
     }
 
 

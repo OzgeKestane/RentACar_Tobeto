@@ -5,27 +5,32 @@ namespace DataAccess.Concrete.EntityFramework
 {
     public class EfTransmissionDal : ITransmissionDal
     {
-        public void Add(Transmission entity)
+        public Transmission Add(Transmission entity)
         {
             throw new NotImplementedException();
         }
 
-        public void Delete(Transmission entity)
+        public Transmission Delete(Transmission entity)
         {
             throw new NotImplementedException();
         }
 
-        public Transmission? GetById(int id)
+        public Transmission Delete(Transmission entity, bool isSoftDelete = true)
         {
             throw new NotImplementedException();
         }
 
-        public IList<Transmission> GetList()
+        public Transmission? Get(Func<Transmission, bool> predicate)
         {
             throw new NotImplementedException();
         }
 
-        public void Update(Transmission entity)
+        public IList<Transmission> GetList(Func<Transmission, bool>? predicate = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Transmission Update(Transmission entity)
         {
             throw new NotImplementedException();
         }

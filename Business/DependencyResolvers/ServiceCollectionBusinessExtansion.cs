@@ -2,7 +2,11 @@
 using Business.BusinessRules;
 using Business.Concrete;
 using DataAccess.Abstract;
+using DataAccess.Concrete.EntityFramework;
+using DataAccess.Concrete.EntityFramework.Contexts;
 using DataAccess.Concrete.InMemory;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
@@ -15,7 +19,7 @@ namespace Business.DependencyResolvers
         //ilk parametre genişleteceğimiz tip olmalı ve başında this keywordü olmalı
         //IServiceColleciton'u genişletmek istiyoruz
         // microsoft.extension.dependencyinjeciton abstractions yükledik.
-        public static IServiceCollection AddBusinessServices(this IServiceCollection services)
+        public static IServiceCollection AddBusinessServices(this IServiceCollection services, IConfiguration configuration)
         {
             services
                 .AddSingleton<IBrandService, BrandManager>()
@@ -26,14 +30,16 @@ namespace Business.DependencyResolvers
                 .AddSingleton<ITransmissionService, TransmissionManager>()
                 .AddSingleton<ITransmissionDal, InMemoryTransmissionDal>()
                 .AddSingleton<TransmissionBusinessRules>();
-            services.AddSingleton<IModelService, ModelManager>();
-            services.AddSingleton<IModelDal, InMemoryModelDal>();
-            services.AddSingleton<ModelBusinessRules>();
+            services.AddScoped<IModelService, ModelManager>();
+            services.AddScoped<IModelDal, EfModelDal>();
+            services.AddScoped<ModelBusinessRules>();
             services.AddSingleton<ICarService, CarManager>();
             services.AddSingleton<ICarDal, InMemoryCarDal>();
             services.AddSingleton<CarBusinessRules>();
 
             services.AddAutoMapper(Assembly.GetExecutingAssembly()); //fluent yapısı yazım şekli
+            services.AddDbContext<RentACarContext>(options => options.UseSqlServer(configuration.GetConnectionString("RentACarMSSQL22")));
+
             return services;
 
         }

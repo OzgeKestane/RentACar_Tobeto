@@ -1,4 +1,5 @@
-﻿using DataAccess.Abstract;
+﻿using Core.CrossCuttingConcerns.Exceptions;
+using DataAccess.Abstract;
 using Entities.Concrete;
 
 namespace Business.BusinessRules
@@ -22,6 +23,11 @@ namespace Business.BusinessRules
         {
             Transmission transmission = _transmissionDal.GetList().SingleOrDefault(b => b.Id == id);
             return transmission;
+        }
+        public void CheckIfTransmissionExists(Transmission? transmission)
+        {
+            if (transmission is null)
+                throw new NotFoundException("Transmission not found.");
         }
 
     }

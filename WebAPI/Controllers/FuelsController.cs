@@ -48,17 +48,20 @@ namespace WebAPI.Controllers
 
         }
         [HttpPut("{id}")]
-        public UpdateFuelResponse Update(UpdateFuelRequest request, int id)
+        public ActionResult<UpdateFuelResponse> Update([FromRoute] int Id, [FromBody] UpdateFuelRequest request)
         {
-            UpdateFuelResponse update = _fuelService.Update(id, request);
-            return update;
+            if (Id != request.Id)
+                return BadRequest();
+            UpdateFuelResponse response = _fuelService.Update(request);
+            return Ok(response);
 
         }
-        [HttpDelete("{id}")]
-        public DeleteFuelResponse Delete(int id)
+        [HttpDelete("/delete")]
+        public DeleteFuelResponse Delete([FromRoute] DeleteFuelRequest request)
         {
-            DeleteFuelResponse delete = _fuelService.Delete(id);
-            return delete;
+            DeleteFuelResponse deleteFuelResponse = _fuelService.Delete(request);
+            return deleteFuelResponse;
+
         }
     }
 }

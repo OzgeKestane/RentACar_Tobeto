@@ -8,7 +8,7 @@ namespace DataAccess.Concrete.InMemory
     {
         protected override int generateId()
         {
-            int nextId = _entities.Count == 0 ? 1 : _entities.Max(e => e.Id) + 1;
+            int nextId = Entities.Count == 0 ? 1 : Entities.Max(e => e.Id) + 1;
             return nextId;
         }
     }

@@ -64,17 +64,21 @@ namespace WebAPI.Controllers
             }
         }
         [HttpPut("/update")]
-        public UpdateBrandResponse Update(UpdateBrandRequest request, int id)
+        public ActionResult<UpdateBrandResponse> Update([FromRoute] int Id, [FromBody] UpdateBrandRequest request)
         {
-            UpdateBrandResponse brandResponse = _brandService.Update(id, request);
-            return brandResponse;
+            if (Id != request.Id)
+                return BadRequest();
+            UpdateBrandResponse response = _brandService.Update(request);
+            return Ok(response);
         }
 
         [HttpDelete("/delete")]
-        public DeleteBrandResponse Delete(int id)
+        public DeleteBrandResponse Delete([FromRoute] DeleteBrandRequest request)
         {
-            DeleteBrandResponse deleteBrandResponse = _brandService.Delete(id);
+            DeleteBrandResponse deleteBrandResponse = _brandService.Delete(request);
             return deleteBrandResponse;
+
         }
     }
+}
 }

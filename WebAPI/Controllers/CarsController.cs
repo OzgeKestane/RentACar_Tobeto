@@ -46,15 +46,17 @@ namespace WebAPI.Controllers
 
         }
         [HttpPut("{id}")]
-        public UpdateCarResponse UpdateCar(UpdateCarRequest request, int id)
+        public ActionResult<UpdateCarResponse> UpdateCar([FromRoute] int Id, [FromBody] UpdateCarRequest request)
         {
-            UpdateCarResponse response = _carService.Update(request, id);
-            return response;
+            if (Id != request.Id)
+                return BadRequest();
+            UpdateCarResponse response = _carService.Update(request);
+            return Ok(response);
         }
         [HttpDelete("{id}")]
-        public DeleteCarResponse Delete(int id)
+        public DeleteCarResponse Delete([FromRoute] DeleteCarRequest request)
         {
-            DeleteCarResponse response = _carService.Delete(id);
+            DeleteCarResponse response = _carService.Delete(request);
             return response;
         }
     }

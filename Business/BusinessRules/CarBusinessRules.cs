@@ -1,4 +1,5 @@
-﻿using DataAccess.Abstract;
+﻿using Core.CrossCuttingConcerns.Exceptions;
+using DataAccess.Abstract;
 using Entities.Concrete;
 
 namespace Business.BusinessRules
@@ -19,12 +20,18 @@ namespace Business.BusinessRules
             Car car = _carDal.GetList().SingleOrDefault(x => x.Id == id);
             return car;
         }
-        public Car CheckIfCarModelYearsValid(int modelYear)
-        {
+        //public Car CheckIfCarModelYearsValid(int modelYear)
+        //{
 
-            Car car = _carDal.GetList().SingleOrDefault(x => x.ModelYear == modelYear);
-            return car;
+        //    Car car = _carDal.GetList().SingleOrDefault(x => x.ModelYear == modelYear);
+        //    return car;
+        //}
+        public void CheckIfCarExists(Car? car)
+        {
+            if (car is null)
+                throw new NotFoundException("Car not found.");
         }
+
 
     }
 }

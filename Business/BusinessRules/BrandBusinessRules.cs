@@ -13,7 +13,8 @@ namespace Business.BusinessRules
         }
         public void CheckIfBrandNameExists(string brandName)
         {
-            bool isExists = _brandDal.GetList().Any(b => b.Name == brandName);
+            bool isExists = _brandDal.Get(brand => brand.Name == brandName) is not null;
+            // bool isExists = _brandDal.GetList().Any(b => b.Name == brandName);
 
             if (isExists)
             {
@@ -26,6 +27,11 @@ namespace Business.BusinessRules
         {
             Brand brand = _brandDal.GetList().SingleOrDefault(b => b.Id == id);
             return brand;
+        }
+        public void CheckIfBrandExists(Brand? brand)
+        {
+            if (brand is null)
+                throw new NotFoundException("Brand not found.");
         }
 
 

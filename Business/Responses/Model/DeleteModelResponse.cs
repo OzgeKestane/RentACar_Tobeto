@@ -8,8 +8,9 @@
         public int FuelId { get; set; }
         public int TransmissionId { get; set; }
         public decimal DailyPrice { get; set; }
+        public short Year { get; set; }
         public DateTime DeletedAt { get; set; }
-        public DeleteModelResponse(int ıd, string name, int brandId, int fuelId, int transmissionId, decimal dailyPrice, DateTime deletedAt)
+        public DeleteModelResponse(int ıd, string name, int brandId, int fuelId, int transmissionId, decimal dailyPrice, DateTime deletedAt, short year)
         {
             Id = ıd;
             Name = name;
@@ -18,7 +19,7 @@
             TransmissionId = transmissionId;
             DailyPrice = dailyPrice;
             DeletedAt = deletedAt;
-
+            Year = year;
         }
         public DeleteModelResponse()
         {

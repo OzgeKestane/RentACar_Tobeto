@@ -30,13 +30,18 @@ namespace Business.Concrete
 
         }
 
-        public DeleteTransmissionResponse Delete(int id)
+        public DeleteTransmissionResponse Delete(DeleteTransmissionRequest request)
         {
-            Transmission transmissionToDelete = _transmissionBusinessRules.FindTransmissionId(id);
-            transmissionToDelete.DeletedAt = DateTime.Now;
-            DeleteTransmissionResponse response = _mapper.Map<DeleteTransmissionResponse>(transmissionToDelete);
-            return response;
+            //Transmission transmissionToDelete = _transmissionBusinessRules.FindTransmissionId(id);
+            //transmissionToDelete.DeletedAt = DateTime.Now;
+            //DeleteTransmissionResponse response = _mapper.Map<DeleteTransmissionResponse>(transmissionToDelete);
+            //return response;
 
+            Transmission? transmissionToDelete = _transmissionDal.Get(predicate: transmission => transmission.Id == request.Id);
+            _transmissionBusinessRules.CheckIfTransmissionExists(transmissionToDelete);
+            Transmission deletedTransmission = _transmissionDal.Delete(transmissionToDelete!);
+            DeleteTransmissionResponse response = _mapper.Map<DeleteTransmissionResponse>(deletedTransmission);
+            return response;
         }
 
         public GetTransmissionListResponse GetList(GetTransmissionListRequest request)
@@ -46,14 +51,21 @@ namespace Business.Concrete
             return response;
         }
 
-        public UpdateTransmissionResponse Update(int id, UpdateTransmissionRequest request)
+        public UpdateTransmissionResponse Update(UpdateTransmissionRequest request)
         {
-            Transmission transmissionToUpdate = _transmissionBusinessRules.FindTransmissionId(id);
-            transmissionToUpdate.Name = request.Name;
-            transmissionToUpdate.UpdatedAt = DateTime.Now;
+            //Transmission transmissionToUpdate = _transmissionBusinessRules.FindTransmissionId(id);
+            //transmissionToUpdate.Name = request.Name;
+            //transmissionToUpdate.UpdatedAt = DateTime.Now;
 
-            UpdateTransmissionResponse response = _mapper.Map<UpdateTransmissionResponse>(transmissionToUpdate);
+            //UpdateTransmissionResponse response = _mapper.Map<UpdateTransmissionResponse>(transmissionToUpdate);
+            //return response;
+            Transmission? transmissionToUpdate = _transmissionDal.Get(predicate: transmission => transmission.Id == request.Id);
+            _transmissionBusinessRules.CheckIfTransmissionExists(transmissionToUpdate);
+            transmissionToUpdate = _mapper.Map(request, transmissionToUpdate);
+            Transmission updatedTransmission = _transmissionDal.Update(transmissionToUpdate);
+            var response = _mapper.Map<UpdateTransmissionResponse>(updatedTransmission);
             return response;
+
 
         }
     }

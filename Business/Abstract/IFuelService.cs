@@ -7,7 +7,7 @@ namespace Business.Abstract
     {
         public AddFuelResponse Add(AddFuelRequest request);
         public GetFuelListResponse GetList(GetFuelListRequest request);
-        public UpdateFuelResponse Update(int id, UpdateFuelRequest request);
-        public DeleteFuelResponse Delete(int id);
+        public UpdateFuelResponse Update(UpdateFuelRequest request);
+        public DeleteFuelResponse Delete(DeleteFuelRequest request);
     }
 }
