@@ -63,7 +63,7 @@ namespace WebAPI.Controllers
                 });
             }
         }
-        [HttpPut("/update")]
+        [HttpPut("{Id}")]
         public ActionResult<UpdateBrandResponse> Update([FromRoute] int Id, [FromBody] UpdateBrandRequest request)
         {
             if (Id != request.Id)
@@ -72,7 +72,7 @@ namespace WebAPI.Controllers
             return Ok(response);
         }
 
-        [HttpDelete("/delete")]
+        [HttpDelete("{Id}")]
         public DeleteBrandResponse Delete([FromRoute] DeleteBrandRequest request)
         {
             DeleteBrandResponse deleteBrandResponse = _brandService.Delete(request);

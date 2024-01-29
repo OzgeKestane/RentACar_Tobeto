@@ -51,7 +51,7 @@ namespace Business.DependencyResolvers
             services.AddScoped<IIndividualCustomerDal, EfIndividualCustomerDal>();
             services.AddScoped<IndividualCustomerBusinessRules>();
 
-            services.AddScoped<ICorporateCustomerService, CorporateCustomeManager>();
+            services.AddScoped<ICorporateCustomerService, CorporateCustomerManager>();
             services.AddScoped<ICorporateCustomerDal, EfCorporateCustomerDal>();
             services.AddScoped<CorporateCustomerBusinessRules>();
 

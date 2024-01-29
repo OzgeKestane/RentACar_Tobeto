@@ -63,9 +63,9 @@ public class ExceptionMiddleware
     }
 
     private Task createValidationProblemDetailsResponse(
-        HttpContext httpContext,
-        ValidationException validationException
-    )
+       HttpContext httpContext,
+       ValidationException validationException
+   )
     {
         httpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
 

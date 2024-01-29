@@ -53,7 +53,10 @@ namespace Business.Concrete
 
         public GetIndividualListResponse GetList(GetIndividualListRequest request)
         {
-            IList<IndividualCustomer> indivList = _ındividualCustomerDal.GetList();
+            IList<IndividualCustomer> indivList = _ındividualCustomerDal.GetList(
+                predicate: indiv => (request.FilterByCustomerId == null || indiv.CustomerId == request.FilterByCustomerId));
+
+
             GetIndividualListResponse response = _mapper.Map<GetIndividualListResponse>(indivList);
             return response;
         }

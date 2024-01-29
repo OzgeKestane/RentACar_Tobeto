@@ -10,13 +10,13 @@ using Entities.Concrete;
 
 namespace Business.Concrete
 {
-    public class CorporateCustomeManager : ICorporateCustomerService
+    public class CorporateCustomerManager : ICorporateCustomerService
     {
         private readonly ICorporateCustomerDal _corporateCustomerDal;
         private readonly CorporateCustomerBusinessRules _corporateCustomerBusinessRules;
         private IMapper _mapper;
 
-        public CorporateCustomeManager(ICorporateCustomerDal corporateCustomerDal, CorporateCustomerBusinessRules corporateCustomerBusinessRules, IMapper mapper)
+        public CorporateCustomerManager(ICorporateCustomerDal corporateCustomerDal, CorporateCustomerBusinessRules corporateCustomerBusinessRules, IMapper mapper)
         {
             _corporateCustomerDal = corporateCustomerDal;
             _corporateCustomerBusinessRules = corporateCustomerBusinessRules;
@@ -51,7 +51,8 @@ namespace Business.Concrete
 
         public GetCorporateListResponse GetList(GetCorporateListRequest request)
         {
-            IList<CorporateCustomer> corpList = _corporateCustomerDal.GetList();
+            IList<CorporateCustomer> corpList = _corporateCustomerDal.GetList(
+                predicate: corp => (request.FilterByCustomerId == null || corp.CustomerId == request.FilterByCustomerId));
             GetCorporateListResponse response = _mapper.Map<GetCorporateListResponse>(corpList);
             return response;
         }

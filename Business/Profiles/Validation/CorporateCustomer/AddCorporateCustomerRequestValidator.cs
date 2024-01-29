@@ -8,7 +8,8 @@ namespace Business.Profiles.Validation.CorporateCustomer
         public AddCorporateCustomerRequestValidator()
         {
             RuleFor(x => x.CompanyName).NotEmpty().MinimumLength(2).MaximumLength(150);
-            RuleFor(x => x.TaxNo).NotEmpty();
+            RuleFor(x => x.CustomerId).NotEmpty();
+            RuleFor(x => x.TaxNo).NotEmpty().Must(x => x.Length == 10);
         }
     }
 }

@@ -44,7 +44,7 @@ namespace WebAPI.Controllers
             //AddTransmissionResponse response = _transmissionService.Add(request);
             //return CreatedAtAction("GetList", response);
         }
-        [HttpPut("{id}")]
+        [HttpPut("{Id}")]
         public ActionResult<UpdateTransmissionResponse> Update([FromRoute] int Id, [FromBody] UpdateTransmissionRequest request)
         {
             if (Id != request.Id)
@@ -52,7 +52,7 @@ namespace WebAPI.Controllers
             UpdateTransmissionResponse response = _transmissionService.Update(request);
             return Ok(response);
         }
-        [HttpDelete("{id}")]
+        [HttpDelete("{Id}")]
         public DeleteTransmissionResponse Delete([FromRoute] DeleteTransmissionRequest request)
         {
             DeleteTransmissionResponse delete = _transmissionService.Delete(request);

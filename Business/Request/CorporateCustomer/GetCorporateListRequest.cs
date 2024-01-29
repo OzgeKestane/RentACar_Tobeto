@@ -2,6 +2,6 @@
 {
     public class GetCorporateListRequest
     {
-
+        public int? FilterByCustomerId { get; set; }
     }
 }

@@ -47,7 +47,7 @@ namespace WebAPI.Controllers
 
 
         }
-        [HttpPut("{id}")]
+        [HttpPut("{Id}")]
         public ActionResult<UpdateFuelResponse> Update([FromRoute] int Id, [FromBody] UpdateFuelRequest request)
         {
             if (Id != request.Id)
@@ -56,7 +56,7 @@ namespace WebAPI.Controllers
             return Ok(response);
 
         }
-        [HttpDelete("/delete")]
+        [HttpDelete("{Id}")]
         public DeleteFuelResponse Delete([FromRoute] DeleteFuelRequest request)
         {
             DeleteFuelResponse deleteFuelResponse = _fuelService.Delete(request);

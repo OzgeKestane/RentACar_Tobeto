@@ -8,6 +8,7 @@ namespace Business.Profiles.Validation.Customer
         public AddCustomerRequestValidator()
         {
             RuleFor(x => x.UserId).NotEmpty().GreaterThan(0);
+
         }
     }
 }

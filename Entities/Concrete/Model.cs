@@ -33,6 +33,6 @@ namespace Entities.Concrete
         public Fuel? Fuel { get; set; } = null;
         //bu modelde hangi araçlar var kısmı
         //model ile car arasında one-to-many ilişkisi var
-        public ICollection<Car>? Cars { get; set; }
+        public ICollection<Car>? Cars { get; set; } = null;
     }
 }

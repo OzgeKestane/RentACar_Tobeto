@@ -4,11 +4,12 @@ namespace Entities.Concrete
 {
     public class IndividualCustomer : Entity<int>
     {
-        public IndividualCustomer(string firstName, string lastName, int nationalIdentity)
+        public IndividualCustomer(string firstName, string lastName, string nationalIdentity, int customerId)
         {
             FirstName = firstName;
             LastName = lastName;
             NationalIdentity = nationalIdentity;
+            CustomerId = customerId;
         }
         public IndividualCustomer()
         {
@@ -17,6 +18,8 @@ namespace Entities.Concrete
 
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public int NationalIdentity { get; set; }
+        public string NationalIdentity { get; set; }
+        public int CustomerId { get; set; }
+        public Customer? Customer { get; set; } = null;
     }
 }

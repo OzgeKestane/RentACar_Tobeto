@@ -45,7 +45,7 @@ namespace WebAPI.Controllers
 
 
         }
-        [HttpPut("{id}")]
+        [HttpPut("{Id}")]
         public ActionResult<UpdateCarResponse> UpdateCar([FromRoute] int Id, [FromBody] UpdateCarRequest request)
         {
             if (Id != request.Id)
@@ -53,7 +53,7 @@ namespace WebAPI.Controllers
             UpdateCarResponse response = _carService.Update(request);
             return Ok(response);
         }
-        [HttpDelete("{id}")]
+        [HttpDelete("{Id}")]
         public DeleteCarResponse Delete([FromRoute] DeleteCarRequest request)
         {
             DeleteCarResponse response = _carService.Delete(request);
