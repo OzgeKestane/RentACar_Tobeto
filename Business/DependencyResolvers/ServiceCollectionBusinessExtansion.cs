@@ -30,12 +30,33 @@ namespace Business.DependencyResolvers
                 .AddSingleton<ITransmissionService, TransmissionManager>()
                 .AddSingleton<ITransmissionDal, InMemoryTransmissionDal>()
                 .AddSingleton<TransmissionBusinessRules>();
+
             services.AddScoped<IModelService, ModelManager>();
             services.AddScoped<IModelDal, EfModelDal>();
             services.AddScoped<ModelBusinessRules>();
+
             services.AddSingleton<ICarService, CarManager>();
             services.AddSingleton<ICarDal, InMemoryCarDal>();
             services.AddSingleton<CarBusinessRules>();
+
+            services.AddScoped<IUserService, UserManager>();
+            services.AddScoped<IUserDal, EfUserDal>();
+            services.AddScoped<UserBusinessRules>();
+
+            services.AddScoped<ICustomerService, CustomerManager>();
+            services.AddScoped<ICustomerDal, EfCustomerDal>();
+            services.AddScoped<CustomerBusinessRules>();
+
+            services.AddScoped<IIndividualCustomerService, IndividualCustomerManager>();
+            services.AddScoped<IIndividualCustomerDal, EfIndividualCustomerDal>();
+            services.AddScoped<IndividualCustomerBusinessRules>();
+
+            services.AddScoped<ICorporateCustomerService, CorporateCustomeManager>();
+            services.AddScoped<ICorporateCustomerDal, EfCorporateCustomerDal>();
+            services.AddScoped<CorporateCustomerBusinessRules>();
+
+
+
 
             services.AddAutoMapper(Assembly.GetExecutingAssembly()); //fluent yapısı yazım şekli
             services.AddDbContext<RentACarContext>(options => options.UseSqlServer(configuration.GetConnectionString("RentACarMSSQL22")));

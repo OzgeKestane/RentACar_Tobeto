@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -107,7 +108,6 @@ namespace DataAccess.Migrations
                     ModelId = table.Column<int>(type: "int", nullable: false),
                     CarState = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Kilometer = table.Column<int>(type: "int", nullable: false),
-                    ModelYear = table.Column<int>(type: "int", nullable: false),
                     Plate = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true),

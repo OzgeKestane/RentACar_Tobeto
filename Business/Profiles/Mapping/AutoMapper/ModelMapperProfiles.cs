@@ -30,6 +30,7 @@ namespace Business.Profiles.Mapping.AutoMapper
             CreateMap<IList<Model>, GetModelListResponse>()
                 .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src));
 
+
             CreateMap<Model, DeleteModelResponse>();
 
             CreateMap<Model, GetModelByIdResponse>();

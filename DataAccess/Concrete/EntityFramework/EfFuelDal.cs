@@ -3,34 +3,30 @@ using Entities.Concrete;
 
 namespace DataAccess.Concrete.EntityFramework
 {
-    public class EfFuelDal : IFuelDal
+    public class EfFuelDal : IModelDal
     {
-        public Fuel Add(Fuel entity)
+
+        public Model Add(Model entity)
         {
             throw new NotImplementedException();
         }
 
-        public Fuel Delete(Fuel entity)
+        public Model Delete(Model entity, bool isSoftDelete = true)
         {
             throw new NotImplementedException();
         }
 
-        public Fuel Delete(Fuel entity, bool isSoftDelete = true)
+        public Model? Get(Func<Model, bool> predicate)
         {
             throw new NotImplementedException();
         }
 
-        public Fuel? Get(Func<Fuel, bool> predicate)
+        public IList<Model> GetList(Func<Model, bool>? predicate = null)
         {
             throw new NotImplementedException();
         }
 
-        public IList<Fuel> GetList(Func<Fuel, bool>? predicate = null)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Fuel Update(Fuel entity)
+        public Model Update(Model entity)
         {
             throw new NotImplementedException();
         }

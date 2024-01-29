@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(RentACarContext))]
-    [Migration("20240126191754_init")]
+    [Migration("20240127175132_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -76,9 +76,6 @@ namespace DataAccess.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("ModelId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ModelYear")
                         .HasColumnType("int");
 
                     b.Property<string>("Plate")

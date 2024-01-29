@@ -9,20 +9,19 @@ namespace Entities.Concrete
         public int ModelId { get; set; }
         public string CarState { get; set; }
         public int Kilometer { get; set; }
-        public int ModelYear { get; set; }
         public string Plate { get; set; }
         public Car()
         {
 
         }
 
-        public Car(int colorId, int modelId, string carState, int kilometer, int modelYear, string plate)
+        public Car(int colorId, int modelId, string carState, int kilometer, string plate)
         {
             ColorId = colorId;
             ModelId = modelId;
             CarState = carState;
             Kilometer = kilometer;
-            ModelYear = modelYear;
+
             Plate = plate;
         }
     }

@@ -20,12 +20,6 @@ namespace Business.BusinessRules
             Car car = _carDal.GetList().SingleOrDefault(x => x.Id == id);
             return car;
         }
-        //public Car CheckIfCarModelYearsValid(int modelYear)
-        //{
-
-        //    Car car = _carDal.GetList().SingleOrDefault(x => x.ModelYear == modelYear);
-        //    return car;
-        //}
         public void CheckIfCarExists(Car? car)
         {
             if (car is null)

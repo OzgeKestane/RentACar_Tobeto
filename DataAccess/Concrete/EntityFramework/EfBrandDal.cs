@@ -3,34 +3,29 @@ using Entities.Concrete;
 
 namespace DataAccess.Concrete.EntityFramework
 {
-    public class EfBrandDal : IBrandDal
+    public class EfBrandDal : IModelDal
     {
-        public Brand Add(Brand entity)
+        public Model Add(Model entity)
         {
             throw new NotImplementedException();
         }
 
-        public Brand Delete(Brand entity)
+        public Model Delete(Model entity, bool isSoftDelete = true)
         {
             throw new NotImplementedException();
         }
 
-        public Brand Delete(Brand entity, bool isSoftDelete = true)
+        public Model? Get(Func<Model, bool> predicate)
         {
             throw new NotImplementedException();
         }
 
-        public Brand? Get(Func<Brand, bool> predicate)
+        public IList<Model> GetList(Func<Model, bool>? predicate = null)
         {
             throw new NotImplementedException();
         }
 
-        public IList<Brand> GetList(Func<Brand, bool>? predicate = null)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Brand Update(Brand entity)
+        public Model Update(Model entity)
         {
             throw new NotImplementedException();
         }

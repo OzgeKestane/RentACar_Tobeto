@@ -52,7 +52,6 @@ namespace Business.Concrete
             //    throw new BusinessException("Model daily price must greater than 0.");
             //}
 
-            ValidationTool.Validate(new AddModelRequestValidator(), request);
             //AddModelRequestValidator validator = new();
             //validator.ValidateAndThrow(request);
             //ValidationResult result=validator.Validate(request);
@@ -60,12 +59,13 @@ namespace Business.Concrete
             //{
             //    throw new ValidationException(result.Errors);
             //}
+            ValidationTool.Validate(new AddModelRequestValidator(), request);
 
             _businessRules.CheckIfModelNameExists(request.Name);
             _businessRules.CheckIfModelYearShouldBeInLast20Years(request.Year);
-            Model modelToAd = _mapper.Map<Model>(request);
-            _modelDal.Add(modelToAd);
-            AddModelResponse response = _mapper.Map<AddModelResponse>(modelToAd);
+            Model modelToAdd = _mapper.Map<Model>(request);
+            _modelDal.Add(modelToAdd);
+            AddModelResponse response = _mapper.Map<AddModelResponse>(modelToAdd);
             return response;
 
         }

@@ -2,14 +2,13 @@
 {
     public class UpdateCarResponse
     {
-        public UpdateCarResponse(int ıd, int colorId, int modelId, string carState, int kilometer, int modelYear, string plate, DateTime updatedAt)
+        public UpdateCarResponse(int ıd, int colorId, int modelId, string carState, int kilometer, string plate, DateTime updatedAt)
         {
             Id = ıd;
             ColorId = colorId;
             ModelId = modelId;
             CarState = carState;
             Kilometer = kilometer;
-            ModelYear = modelYear;
             Plate = plate;
             UpdatedAt = updatedAt;
         }
@@ -19,7 +18,6 @@
         public int ModelId { get; set; }
         public string CarState { get; set; }
         public int Kilometer { get; set; }
-        public int ModelYear { get; set; }
         public string Plate { get; set; }
         public DateTime UpdatedAt { get; set; }
         public UpdateCarResponse()
