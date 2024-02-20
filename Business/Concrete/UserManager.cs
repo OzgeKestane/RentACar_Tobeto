@@ -17,13 +17,15 @@ namespace Business.Concrete
             _userDal = userDal;
             _tokenHelper = tokenHelper;
         }
-        public bool Login(LoginRequest request)
+        public AccessToken Login(LoginRequest request)
         {
             User? user = _userDal.Get(i => i.Email == request.Email);
             // Business Rules...
 
             bool isPasswordCorrect = HashingHelper.VerifyPassword(request.Password, user.PasswordHash, user.PasswordSalt);
-            return isPasswordCorrect;
+            if (!isPasswordCorrect)
+                throw new Exception("Şifre yanlış.");
+            return _tokenHelper.CreateToken(user);
         }
 
         public void Register(RegisterRequest request)
