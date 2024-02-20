@@ -28,7 +28,7 @@ namespace Business.Concrete
             ValidationTool.Validate(new AddCustomerRequestValidator(), request);
             Customer customerToAdd = _mapper.Map<Customer>(request);
             _customerDal.Add(customerToAdd);
-            AddCustomerResponse response = _mapper.Map<AddCustomerResponse>(request);
+            AddCustomerResponse response = _mapper.Map<AddCustomerResponse>(customerToAdd);
             return response;
         }
 

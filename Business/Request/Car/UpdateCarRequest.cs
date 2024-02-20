@@ -11,6 +11,10 @@
             Plate = plate;
             Id = ıd;
         }
+        public UpdateCarRequest()
+        {
+
+        }
         public int Id { get; set; }
         public int ColorId { get; set; }
         public int ModelId { get; set; }

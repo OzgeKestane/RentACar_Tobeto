@@ -21,6 +21,7 @@ namespace Business.DependencyResolvers
         // microsoft.extension.dependencyinjeciton abstractions yükledik.
         public static IServiceCollection AddBusinessServices(this IServiceCollection services, IConfiguration configuration)
         {
+            services.AddScoped
             services
                 .AddSingleton<IBrandService, BrandManager>()
                 .AddSingleton<IBrandDal, InMemoryBrandDal>()
@@ -41,7 +42,7 @@ namespace Business.DependencyResolvers
 
             services.AddScoped<IUserService, UserManager>();
             services.AddScoped<IUserDal, EfUserDal>();
-            services.AddScoped<UserBusinessRules>();
+            //services.AddScoped<UserBusinessRules>();
 
             services.AddScoped<ICustomerService, CustomerManager>();
             services.AddScoped<ICustomerDal, EfCustomerDal>();

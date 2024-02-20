@@ -8,5 +8,9 @@
         {
             Id = ıd;
         }
+        public DeleteCorporateRequest()
+        {
+
+        }
     }
 }

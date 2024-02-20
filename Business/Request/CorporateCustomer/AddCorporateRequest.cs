@@ -8,6 +8,10 @@
             TaxNo = taxNo;
             CustomerId = customerId;
         }
+        public AddCorporateRequest()
+        {
+
+        }
 
         public string CompanyName { get; set; }
         public string TaxNo { get; set; }

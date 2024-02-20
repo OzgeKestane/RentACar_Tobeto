@@ -7,5 +7,9 @@
         {
             Id = id;
         }
+        public DeleteTransmissionRequest()
+        {
+
+        }
     }
 }

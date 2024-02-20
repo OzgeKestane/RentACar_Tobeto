@@ -6,6 +6,10 @@
         {
             UserId = userId;
         }
+        public AddCustomerRequest()
+        {
+
+        }
         public int UserId { get; set; }
 
     }

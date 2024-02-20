@@ -9,5 +9,9 @@
             Name = name;
             Id = ıd;
         }
+        public UpdateBrandRequest()
+        {
+
+        }
     }
 }

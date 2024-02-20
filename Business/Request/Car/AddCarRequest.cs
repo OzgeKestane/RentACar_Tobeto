@@ -11,6 +11,10 @@
 
             Plate = plate;
         }
+        public AddCarRequest()
+        {
+
+        }
 
         public int ColorId { get; set; }
         public int ModelId { get; set; }

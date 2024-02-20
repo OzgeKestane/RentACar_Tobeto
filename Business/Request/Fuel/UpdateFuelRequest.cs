@@ -2,12 +2,15 @@
 {
     public class UpdateFuelRequest
     {
-        public string Name { get; set; }
         public int Id { get; set; }
-        public UpdateFuelRequest(string name, int ıd)
+        public string Name { get; set; }
+        public UpdateFuelRequest(string name, int id)
         {
             Name = name;
-            Id = ıd;
+            Id = id;
+        }
+        public UpdateFuelRequest()
+        {
 
         }
     }

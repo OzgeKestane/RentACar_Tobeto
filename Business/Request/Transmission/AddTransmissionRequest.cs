@@ -7,5 +7,9 @@
         {
             Name = name;
         }
+        public AddTransmissionRequest()
+        {
+
+        }
     }
 }

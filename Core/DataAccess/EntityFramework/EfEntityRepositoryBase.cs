@@ -4,74 +4,68 @@ using Microsoft.EntityFrameworkCore;
 namespace Core.DataAccess.EntityFramework
 {
     public class EfEntityRepositoryBase<TEntity, TEntityId, TContext> : IEntityRepository<TEntity, TEntityId>
-        where TEntity : class, IEntity<TEntityId>, new()
-        where TContext : DbContext, new()
+        where TEntity : Entity<TEntityId>
+        where TContext : DbContext
     {
-        protected readonly HashSet<TEntity> Entities = new();
+
+        private readonly TContext Context;
+
+        public EfEntityRepositoryBase(TContext context)
+        {
+            Context = context;
+        }
+
         public TEntity Add(TEntity entity)
         {
-            using (TContext context = new TContext())
-            {
-                entity.CreatedAt = DateTime.UtcNow;
-                var addedEntity = context.Entry(entity);
-                addedEntity.State = EntityState.Added;
-                context.SaveChanges();
-                return entity;
-            }
+            entity.CreatedAt = DateTime.UtcNow;
+            Context.Add(entity);
+            Context.SaveChanges();
+            return entity;
+            //using (TContext context = new TContext())
+            //{
+            //    entity.CreatedAt = DateTime.UtcNow;
+            //    var addedEntity = context.Entry(entity);
+            //    addedEntity.State = EntityState.Added;
+            //    context.SaveChanges();
+            //    return entity;
+            //}
         }
 
         public TEntity Delete(TEntity entity, bool isSoftDelete = true)
         {
-            using (TContext context = new TContext())
-            {
-                entity.DeletedAt = DateTime.UtcNow;
-                if (!isSoftDelete)
-                {
-                    var deletedEntity = context.Entry(entity);
-                    deletedEntity.State = EntityState.Deleted;
-                    context.SaveChanges();
-                }
-                //_context.Entry(entity).State = EntityState.Modified;
+            entity.DeletedAt = DateTime.UtcNow;
+            //Context.Entry(entity).State = EntityState.Modified;
 
-                return entity;
+            if (!isSoftDelete)
+            {
+                Context.Remove(entity);
             }
+            Context.SaveChanges();
+            return entity;
         }
 
         public TEntity? Get(Func<TEntity, bool> predicate)
         {
 
-            using (TContext context = new TContext())
-            {
-                return context.Set<TEntity>().SingleOrDefault(predicate);
-            }
-
+            return Context.Set<TEntity>().FirstOrDefault(predicate);
 
         }
 
         public IList<TEntity> GetList(Func<TEntity, bool>? predicate = null)
         {
-            using (TContext context = new TContext())
-            {
-                IQueryable<TEntity> query = context.Set<TEntity>();
-                if (predicate != null)
-                {
-                    query = query.Where(predicate).AsQueryable();
-                }
+            IQueryable<TEntity> entities = Context.Set<TEntity>();
+            if (predicate is not null)
+                entities = entities.Where(predicate).AsQueryable();
 
-                return query.ToList();
-            }
+            return entities.ToList();
         }
 
         public TEntity Update(TEntity entity)
         {
-            using (TContext context = new TContext())
-            {
-                entity.UpdatedAt = DateTime.UtcNow;
-                var updatedEntity = context.Entry(entity);
-                updatedEntity.State = EntityState.Modified;
-                context.SaveChanges();
-                return entity;
-            }
+            entity.UpdatedAt = DateTime.UtcNow;
+            Context.Update(entity);
+            Context.SaveChanges();
+            return entity;
         }
     }
 }

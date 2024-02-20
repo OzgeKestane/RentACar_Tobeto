@@ -1,4 +1,5 @@
-﻿using Entities.Concrete;
+﻿using Core.Entities;
+using Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -18,6 +19,19 @@ namespace DataAccess.Concrete.EntityFramework.Contexts
         public RentACarContext(DbContextOptions dbContextOptions) : base(dbContextOptions)
         {
 
+        }
+        //tabloların veri tabanındaki değişiklikleri burada override ederek yapıyoruz. Migration dosyasında değil.
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            //modelBuilder.Entity<Brand>().HasKey(i => i.Id).HasName("Markalar"); // Ef Core Naming Convention BrandId
+            modelBuilder.Entity<Brand>(e =>
+            {
+                //e.ToTable("Markalar");
+                e.HasKey(i => i.Id);
+                e.Property(i => i.Premium).HasDefaultValue(true);
+
+            });
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

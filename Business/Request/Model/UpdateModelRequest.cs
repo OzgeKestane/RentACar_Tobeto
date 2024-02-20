@@ -9,15 +9,19 @@
         public int TransmissionId { get; set; }
         public decimal DailyPrice { get; set; }
         public short Year { get; set; }
-        public UpdateModelRequest(int id, string name, int brandId, int fuelId, int transmissionId, decimal dailyPrice, short year)
+        public UpdateModelRequest(string name, int brandId, int fuelId, int transmissionId, decimal dailyPrice, short year, int ıd)
         {
-            Id = id;
             Name = name;
             BrandId = brandId;
             FuelId = fuelId;
             TransmissionId = transmissionId;
             DailyPrice = dailyPrice;
             Year = year;
+            Id = ıd;
+        }
+        public UpdateModelRequest()
+        {
+
         }
     }
 }

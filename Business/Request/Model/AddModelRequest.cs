@@ -17,6 +17,9 @@
             TransmissionId = transmissionId;
             DailyPrice = dailyPrice;
             Year = year;
+        }
+        public AddModelRequest()
+        {
 
         }
 

@@ -2,12 +2,15 @@
 {
     public class UpdateCustomerRequest
     {
-        public UpdateCustomerRequest(int ıd, int userId)
+        public UpdateCustomerRequest(int userId, int ıd)
         {
-            Id = ıd;
             UserId = userId;
+            Id = ıd;
         }
+        public UpdateCustomerRequest()
+        {
 
+        }
         public int Id { get; set; }
         public int UserId { get; set; }
 

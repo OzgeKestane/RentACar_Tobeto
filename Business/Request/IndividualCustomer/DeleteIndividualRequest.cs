@@ -6,6 +6,10 @@
         {
             Id = ıd;
         }
+        public DeleteIndividualRequest()
+        {
+
+        }
 
         public int Id { get; set; }
 

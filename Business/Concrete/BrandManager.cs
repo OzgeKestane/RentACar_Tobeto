@@ -10,7 +10,7 @@ namespace Business.Concrete
 {
     public class BrandManager : IBrandService
     {
-        private readonly IBrandDal _brandDal;
+        private readonly IBrandDal _brandDal; //bir entity service'i kendi entitysi dışında hiç bir entitynin DAL'ını enjekte etmemelidir.
         private readonly BrandBusinessRules _brandBusinessRules;
         private IMapper _mapper;
 
@@ -26,10 +26,10 @@ namespace Business.Concrete
             _brandBusinessRules.CheckIfBrandNameExists(request.Name);
 
             //validation
-            //yetki kontrolü 
+            //Authentication-Authorization
             //Cache
             //Transaction vs..
-            // Brand addedBrand=
+            // 
 
             Brand brandToAdd = _mapper.Map<Brand>(request);   //mapping    //new(request.name) elle newlemek yerine mappleme özelliğini kullanıyoruz.         //aynı işlemde eşleşen kısımları, Brand nesnesinde oluşturuyor  
             _brandDal.Add(brandToAdd);
@@ -71,6 +71,10 @@ namespace Business.Concrete
 
             GetBrandListResponse response = _mapper.Map<GetBrandListResponse>(brandList);
             return response;
+        }
+        public Brand? GetById(int id)
+        {
+            return _brandDal.Get(i => i.Id == id);
         }
 
 

@@ -9,6 +9,10 @@
             TaxNo = taxNo;
             CustomerId = customerId;
         }
+        public UpdateCorporateRequest()
+        {
+
+        }
 
         public int Id { get; set; }
         public string CompanyName { get; set; }

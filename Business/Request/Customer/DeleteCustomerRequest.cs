@@ -6,7 +6,10 @@
         {
             Id = ıd;
         }
+        public DeleteCustomerRequest()
+        {
 
+        }
         public int Id { get; set; }
     }
 }
