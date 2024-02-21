@@ -24,22 +24,22 @@ namespace Business.DependencyResolvers
         {
             services.AddScoped<ITokenHelper, JwtTokenHelper>();
             services
-                .AddSingleton<IBrandService, BrandManager>()
-                .AddSingleton<IBrandDal, InMemoryBrandDal>()
-                .AddSingleton<BrandBusinessRules>();
-            services.AddSingleton<IFuelService, FuelManager>().AddSingleton<IFuelDal, InMemoryFuelDal>().AddSingleton<FuelBusinessRules>();
+                .AddScoped<IBrandService, BrandManager>()
+                .AddScoped<IBrandDal, InMemoryBrandDal>()
+                .AddScoped<BrandBusinessRules>();
+            services.AddScoped<IFuelService, FuelManager>().AddSingleton<IFuelDal, InMemoryFuelDal>().AddScoped<FuelBusinessRules>();
             services
-                .AddSingleton<ITransmissionService, TransmissionManager>()
-                .AddSingleton<ITransmissionDal, InMemoryTransmissionDal>()
-                .AddSingleton<TransmissionBusinessRules>();
+                .AddScoped<ITransmissionService, TransmissionManager>()
+                .AddScoped<ITransmissionDal, InMemoryTransmissionDal>()
+                .AddScoped<TransmissionBusinessRules>();
 
             services.AddScoped<IModelService, ModelManager>();
             services.AddScoped<IModelDal, EfModelDal>();
             services.AddScoped<ModelBusinessRules>();
 
-            services.AddSingleton<ICarService, CarManager>();
-            services.AddSingleton<ICarDal, InMemoryCarDal>();
-            services.AddSingleton<CarBusinessRules>();
+            services.AddScoped<ICarService, CarManager>();
+            services.AddScoped<ICarDal, InMemoryCarDal>();
+            services.AddScoped<CarBusinessRules>();
 
             services.AddScoped<IUserService, UserManager>();
             services.AddScoped<IUserDal, EfUserDal>();

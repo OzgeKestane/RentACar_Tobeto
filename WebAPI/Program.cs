@@ -1,37 +1,13 @@
 using Business.DependencyResolvers;
 using Core.CrossCuttingConcerns.Exceptions;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
-//ADDSINGLETON KISIMLARINI BUSÝNESSDA DEPENDECYRESOLVERS ÝÇERÝSÝNDE CLASS AÇARAK EKLEDÝK. 
-// Add services to the container.
-//ibrandservice istendiðinde, brandmanager ver
-//builder.Services.AddSingleton<IBrandService, BrandManager>();
-//Singleton: tek bir nesne oluþturur ve herkese onu verir.
-//ek ödev diðer yöntemleri araþtýrýnýz.
-
-//builder.Services.AddSingleton<IBrandDal, InMemoryBrandDal>();//Ibranddal isteyen heryerde, inmemorybranddal referansýný verecek. 1 kere newliyor aldýðý referansý uygulama hayatý boyunca kullanacak. 
-//public static readonly IBrandDal BrandDal = new InMemoryBrandDal(); singleton karþýlýðý olarak bu. 
-//builder.Services.AddSingleton<BrandBusinessRules>();
-//addscoped
-//builder.Services.AddScoped<Random>();new Random();
-//builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
-
-
-//reflection yöntemiyle profile class'ýný kalýtým alan tüm classlarý bulur ve Automappera ekler
-//ManageNuget Automapper microsoft dependencyinjection indirdik//Serviceregistration sildiðim için bu mapperlerý businesse (klasör) ekledik. 
-//addTransient
-
 builder.Services.AddBusinessServices(builder.Configuration);
-
-
-
-//builder.Services.AddSingleton<IFuelService, FuelManager>();
-//builder.Services.AddSingleton<IFuelDal, InMemoryFuelDal>();
-//builder.Services.AddSingleton<BrandBusinessRules>();
-
-//builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
-
+builder.Services.AddHttpContextAccessor();
 
 
 builder.Services.AddControllers();
@@ -39,10 +15,27 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+Core.Utilities.Security.JWT.TokenOptions? tokenOptions = builder.Configuration.GetSection("TokenOptions").Get<Core.Utilities.Security.JWT.TokenOptions>();
+builder.Services
+    .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters()
+        {
+            ValidateIssuer = true, // Issuer'ý validate etmeli mi?
+            ValidateAudience = true,// Audience'ý validate etmeli mi?
+            ValidateLifetime = true, // Süreyi validate etmeli mi?
+            ValidateIssuerSigningKey = true, // Security key validate etmeli mi?
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(tokenOptions.SecurityKey)), // Valid security key deðeri
+            ValidIssuer = tokenOptions.Issuer,// Valid Issuer deðeri
+            ValidAudience = tokenOptions.Audience,// Valid Audience deðeri
+        };
+    });
+
 
 var app = builder.Build();
-if (app.Environment.IsProduction())
-    app.UseGlobalExceptionHandling();
+//if (app.Environment.IsProduction())
+app.UseGlobalExceptionHandling();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -52,6 +45,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 

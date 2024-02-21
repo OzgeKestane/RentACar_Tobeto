@@ -1,12 +1,14 @@
 ﻿using Business.Abstract;
 using Business.Request.Brand;
 using Business.Responses.Brand;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+
     public class BrandsController : ControllerBase
     {
         private readonly IBrandService _brandService;
@@ -19,6 +21,7 @@ namespace WebAPI.Controllers
             //IBrandDal brandDal = new InMemoryBrandDal();
             //_brandService = new BrandManager(brandDal);// Daha sonra IoC yapısını kurduğumuzda dependency injection ile daha verimli hale getiricez.
         }
+
 
         //[HttpGet]
 
@@ -43,6 +46,8 @@ namespace WebAPI.Controllers
 
         //[HttpPost("/add")]//endpoint http://localhost:5031/api/brands/add
         [HttpPost] //POST http://localhost:5031/api/brands
+        [Authorize] //Controller içinde kullanılır. // admin olup olmadığını sorgular 
+
         public ActionResult<AddBrandResponse> Add(AddBrandRequest request)
         {
             try

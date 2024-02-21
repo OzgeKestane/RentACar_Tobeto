@@ -21,6 +21,7 @@ namespace Core.Utilities.Security.JWT
         {
             // TODO: Refactor
             DateTime expirationTime = DateTime.Now.AddMinutes(_tokenOptions.ExpirationTime);
+            // string -> byte dönüşümü .. Encoding
             SecurityKey securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_tokenOptions.SecurityKey));
             SigningCredentials signingCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha512Signature);
 

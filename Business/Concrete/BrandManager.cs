@@ -5,6 +5,7 @@ using Business.Request.Brand;
 using Business.Responses.Brand;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Microsoft.AspNetCore.Http;
 
 namespace Business.Concrete
 {
@@ -13,16 +14,28 @@ namespace Business.Concrete
         private readonly IBrandDal _brandDal; //bir entity service'i kendi entitysi dışında hiç bir entitynin DAL'ını enjekte etmemelidir.
         private readonly BrandBusinessRules _brandBusinessRules;
         private IMapper _mapper;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public BrandManager(IBrandDal brandDal, BrandBusinessRules brandBusinessRules, IMapper mapper)
+        public BrandManager(IBrandDal brandDal, BrandBusinessRules brandBusinessRules, IMapper mapper, IHttpContextAccessor httpContextAccessor)
         {
             _brandDal = brandDal;//new InMemoryDal(); // başka katmanların classları newlenmez. bu yüzden dependency injection 
             _brandBusinessRules = brandBusinessRules;
             _mapper = mapper;
+            _httpContextAccessor = httpContextAccessor;
         }
 
+        // AOP => Aspect Oriented Programming
+        // Pipeline
+        //mediatr , pipeline , cqrs
+        //Auth&Authorization
+        //role  implementasyonu => Claimlere kullanıcı rollerini db'den ekleyip gelen isteklerde
+        // rol bazlı kontrol yapılması
         public AddBrandResponse Add(AddBrandRequest request)
         { //İş kuralları
+            if (!_httpContextAccessor.HttpContext.User.Identity.IsAuthenticated) //kullanıcı yoksa
+            {
+                throw new Exception("Bu endpointi çalıştırmak için giriş yapmak zorundasınız");
+            }
             _brandBusinessRules.CheckIfBrandNameExists(request.Name);
 
             //validation
@@ -48,13 +61,6 @@ namespace Business.Concrete
             Brand deletedBrand = _brandDal.Delete(brandToDelete!);
             DeleteBrandResponse response = _mapper.Map<DeleteBrandResponse>(deletedBrand);
             return response;
-
-            //Brand brandToDelete = _brandBusinessRules.FindBrandId(id);
-            //brandToDelete.DeletedAt = DateTime.Now;
-            //DeleteBrandResponse response = _mapper.Map<DeleteBrandResponse>(brandToDelete);
-            //return response;
-
-
         }
 
         public GetBrandListResponse GetList(GetBrandListRequest request)
@@ -82,13 +88,8 @@ namespace Business.Concrete
         public UpdateBrandResponse Update(UpdateBrandRequest request)
         {
 
-            //Brand brandToUpdate = _brandBusinessRules.FindBrandId(id);
-            //brandToUpdate.Name = request.Name;
-            //brandToUpdate.UpdatedAt = DateTime.Now;
-            //UpdateBrandResponse response = _mapper.Map<UpdateBrandResponse>(brandToUpdate);
-            //return response;
             Brand? BrandToUpdate = _brandDal.Get(predicate: brand => brand.Id == request.Id);
-            _brandBusinessRules.CheckIfBrandExists(BrandToUpdate);
+            //_brandBusinessRules.CheckIfBrandExists(BrandToUpdate);
 
             BrandToUpdate = _mapper.Map(request, BrandToUpdate);
             Brand updatedBrand = _brandDal.Update(BrandToUpdate!);
