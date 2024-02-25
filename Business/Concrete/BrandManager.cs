@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Business.Abstract;
+using Business.BusinessAspects.Automapper;
 using Business.BusinessRules;
 using Business.Request.Brand;
 using Business.Responses.Brand;
@@ -30,19 +31,18 @@ namespace Business.Concrete
         //Auth&Authorization
         //role  implementasyonu => Claimlere kullanıcı rollerini db'den ekleyip gelen isteklerde
         // rol bazlı kontrol yapılması
+
+
+        [SecuredOperation("brand.add,admin")]
         public AddBrandResponse Add(AddBrandRequest request)
-        { //İş kuralları
-            if (!_httpContextAccessor.HttpContext.User.Identity.IsAuthenticated) //kullanıcı yoksa
-            {
-                throw new Exception("Bu endpointi çalıştırmak için giriş yapmak zorundasınız");
-            }
+        {
+            //if (!_httpContextAccessor.HttpContext.User.Identity.IsAuthenticated) //kullanıcı yoksa
+            //{
+            //    throw new Exception("Bu endpointi çalıştırmak için giriş yapmak zorundasınız");
+            //}
             _brandBusinessRules.CheckIfBrandNameExists(request.Name);
 
-            //validation
-            //Authentication-Authorization
-            //Cache
-            //Transaction vs..
-            // 
+
 
             Brand brandToAdd = _mapper.Map<Brand>(request);   //mapping    //new(request.name) elle newlemek yerine mappleme özelliğini kullanıyoruz.         //aynı işlemde eşleşen kısımları, Brand nesnesinde oluşturuyor  
             _brandDal.Add(brandToAdd);
@@ -53,7 +53,7 @@ namespace Business.Concrete
         }
 
 
-
+        [SecuredOperation("brand.delete,admin")]
         public DeleteBrandResponse Delete(DeleteBrandRequest request)
         {
             Brand? brandToDelete = _brandDal.Get(predicate: brand => brand.Id == request.Id);

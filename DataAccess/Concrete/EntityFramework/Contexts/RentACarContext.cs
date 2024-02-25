@@ -16,10 +16,17 @@ namespace DataAccess.Concrete.EntityFramework.Contexts
         public DbSet<Customer> Customers { get; set; }
         public DbSet<IndividualCustomer> IndividualCustomers { get; set; }
         public DbSet<CorporateCustomer> CorporateCustomers { get; set; }
+        public DbSet<OperationClaim> OperationClaims { get; set; }
+        public DbSet<UserOperationClaim> UserOperationClaims { get; set; }
         public RentACarContext(DbContextOptions dbContextOptions) : base(dbContextOptions)
         {
 
         }
+
+        public RentACarContext()
+        {
+        }
+
         //tabloların veri tabanındaki değişiklikleri burada override ederek yapıyoruz. Migration dosyasında değil.
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

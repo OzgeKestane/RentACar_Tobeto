@@ -1,5 +1,8 @@
 using Business.DependencyResolvers;
 using Core.CrossCuttingConcerns.Exceptions;
+using Core.DependencyResolvers;
+using Core.Extensions;
+using Core.Utilities.IoC;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -32,6 +35,10 @@ builder.Services
         };
     });
 
+builder.Services.AddDependencyResolvers(new ICoreModule[]
+{
+    new CoreModule()
+});
 
 var app = builder.Build();
 //if (app.Environment.IsProduction())

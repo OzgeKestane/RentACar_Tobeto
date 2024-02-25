@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Business.Abstract;
+using Business.BusinessAspects.Automapper;
 using Business.BusinessRules;
 using Business.Profiles.Validation.Model;
 using Business.Request.Model;
@@ -23,43 +24,10 @@ namespace Business.Concrete
             _businessRules = businessRules;
             _mapper = mapper;
         }
-
+        [SecuredOperation("model.add,admin")]
         public AddModelResponse Add(AddModelRequest request)
         {
-            //_businessRules.CheckIfModelNameLength(request.Name);
-            //_businessRules.CheckIdDailyPriceValid(request.DailyPrice);
-            //validdation
-            //fluent validation
-            //if (request.BrandId == 0)
-            //    throw new Exception("Brand Id cannot be 0.");
-            //if (request.FuelId == 0)
-            //    throw new Exception("Fuel Id cannot be 0.");
-            //if (request.TransmissionId == 0)
-            //    throw new Exception("Transmission Id cannot be 0.");
-            //if(string.IsNullOrWhiteSpace(request.Name))
-            //    throw new Exception("Name cannor be empty.");
-            //if(request.Year<=0)
-            //    throw new Exception("Year must be grater than.");
 
-
-            //if (request.Name.Length < 2)
-            //{
-            //    throw new BusinessException("Model name must be at least 2 characters.");
-            //}
-            //if (request.Name.Length > 50)
-            //    throw new Exception("Name cannot be longer than 50 characters.");
-            //if (request.DailyPrice <= 0)
-            //{
-            //    throw new BusinessException("Model daily price must greater than 0.");
-            //}
-
-            //AddModelRequestValidator validator = new();
-            //validator.ValidateAndThrow(request);
-            //ValidationResult result=validator.Validate(request);
-            //if (!result.IsValid)
-            //{
-            //    throw new ValidationException(result.Errors);
-            //}
             ValidationTool.Validate(new AddModelRequestValidator(), request);
 
             _businessRules.CheckIfModelNameExists(request.Name);
@@ -74,7 +42,7 @@ namespace Business.Concrete
             return response;
 
         }
-
+        [SecuredOperation("model.delete,admin")]
         public DeleteModelResponse Delete(DeleteModelRequest request)
         {
             Model? modelTodelete = _modelDal.Get(predicate: model => model.Id == request.Id);

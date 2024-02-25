@@ -1,8 +1,10 @@
 ﻿using Core.Entities;
+using Core.Extensions;
+using Core.Utilities.Security.Encryption;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
-using System.Text;
+using System.Security.Claims;
 
 namespace Core.Utilities.Security.JWT
 {
@@ -10,6 +12,7 @@ namespace Core.Utilities.Security.JWT
     {
         private IConfiguration _configuration;
         private TokenOptions _tokenOptions;
+        private DateTime _expirationTime;
 
         public JwtTokenHelper(IConfiguration configuration)
         {
@@ -17,18 +20,18 @@ namespace Core.Utilities.Security.JWT
             _tokenOptions = _configuration.GetSection("TokenOptions").Get<TokenOptions>();
         }
 
-        public AccessToken CreateToken(User user)
+        public AccessToken CreateToken(User user, List<OperationClaim> operationClaims)
         {
             // TODO: Refactor
-            DateTime expirationTime = DateTime.Now.AddMinutes(_tokenOptions.ExpirationTime);
+            _expirationTime = DateTime.Now.AddMinutes(_tokenOptions.ExpirationTime);
             // string -> byte dönüşümü .. Encoding
-            SecurityKey securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_tokenOptions.SecurityKey));
-            SigningCredentials signingCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha512Signature);
+            SecurityKey securityKey = SecurityKeyHelper.CreateSecurityKey(_tokenOptions.SecurityKey);
+            SigningCredentials signingCredentials = SigningCredentialsHelper.CreateSigningCredentials(securityKey);
 
             JwtSecurityToken jwt = new JwtSecurityToken(
                  issuer: _tokenOptions.Issuer,
                  audience: _tokenOptions.Audience,
-                 expires: expirationTime,
+                 expires: _expirationTime,
                  signingCredentials: signingCredentials,
                  notBefore: DateTime.Now
                 );
@@ -40,8 +43,31 @@ namespace Core.Utilities.Security.JWT
             return new AccessToken()
             {
                 Token = token,
-                ExpirationTime = expirationTime,
+                ExpirationTime = _expirationTime,
             };
+        }
+        public JwtSecurityToken CreateJwtSecurityToken(TokenOptions tokenOptions, User user,
+            SigningCredentials signingCredentials, List<OperationClaim> operationClaims)
+        {
+            var jwt = new JwtSecurityToken(
+                issuer: tokenOptions.Issuer,
+                audience: tokenOptions.Audience,
+                expires: _expirationTime,
+                notBefore: DateTime.Now,
+                claims: SetClaims(user, operationClaims),
+                signingCredentials: signingCredentials
+            );
+            return jwt;
+        }
+
+        private IEnumerable<Claim> SetClaims(User user, List<OperationClaim> operationClaims)
+        {
+            var claims = new List<Claim>();
+            claims.AddNameIdentifier(user.Id.ToString());
+            claims.AddEmail(user.Email);
+            claims.AddRoles(operationClaims.Select(c => c.Name).ToArray());
+
+            return claims;
         }
     }
 }

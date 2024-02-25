@@ -21,11 +21,11 @@ namespace Business.Concrete
         {
             User? user = _userDal.Get(i => i.Email == request.Email);
             // Business Rules...
-
+            var claims = _userDal.GetClaims(user);
             bool isPasswordCorrect = HashingHelper.VerifyPassword(request.Password, user.PasswordHash, user.PasswordSalt);
             if (!isPasswordCorrect)
                 throw new Exception("Şifre yanlış.");
-            return _tokenHelper.CreateToken(user);
+            return _tokenHelper.CreateToken(user, claims);
         }
 
         public void Register(RegisterRequest request)
@@ -41,6 +41,14 @@ namespace Business.Concrete
             user.PasswordHash = passwordHash;
 
             _userDal.Add(user);
+        }
+        public List<OperationClaim> GetClaims(User user)
+        {
+            return _userDal.GetClaims(user);
+        }
+        public User GetByMail(string email)
+        {
+            return _userDal.Get(u => u.Email == email);
         }
     }
 }
