@@ -8,8 +8,8 @@ namespace Business.Concrete
 {
     public class AuthManager : IAuthService
     {
-        private IUserService _userService;
-        private ITokenHelper _tokenHelper;
+        private readonly IUserService _userService;
+        private readonly ITokenHelper _tokenHelper;
 
         public AuthManager(IUserService userService, ITokenHelper tokenHelper)
         {
@@ -26,6 +26,8 @@ namespace Business.Concrete
 
         public AccessToken Login(LoginRequest request)
         {
+            User user = new();
+            var claims = _userService.GetClaims(user);
             var userToCheck = _userService.GetByMail(request.Email);
             if (userToCheck == null)
             {
@@ -36,9 +38,7 @@ namespace Business.Concrete
             {
                 throw new Exception("Parola hatası");
             }
-            return new AccessToken();
-
-
+            return _tokenHelper.CreateToken(userToCheck, claims);
         }
 
         public void Register(RegisterRequest request, string password)
@@ -53,8 +53,6 @@ namespace Business.Concrete
                 Approved = true
             };
             _userService.Register(request);
-
-
         }
 
         public void UserExists(string email)

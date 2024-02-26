@@ -45,7 +45,6 @@ namespace Business.DependencyResolvers
             services.AddScoped<IUserDal, EfUserDal>();
             //services.AddScoped<UserBusinessRules>();
             services.AddScoped<IAuthService, AuthManager>();
-            services.AddScoped<ITokenHelper, JwtTokenHelper>();
 
             services.AddScoped<ICustomerService, CustomerManager>();
             services.AddScoped<ICustomerDal, EfCustomerDal>();

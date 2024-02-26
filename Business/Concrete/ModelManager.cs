@@ -33,9 +33,6 @@ namespace Business.Concrete
             _businessRules.CheckIfModelNameExists(request.Name);
             _businessRules.CheckIfModelYearShouldBeInLast20Years(request.Year);
             _businessRules.CheckIfBrandExists(request.BrandId);
-            //Brand? brand = _brandService.GetById(i => i.ID == request.BrandId);
-            //if (brand is null)
-            //    throw new Exception("Böyle bir marka yok");
             Model modelToAdd = _mapper.Map<Model>(request);
             _modelDal.Add(modelToAdd);
             AddModelResponse response = _mapper.Map<AddModelResponse>(modelToAdd);
