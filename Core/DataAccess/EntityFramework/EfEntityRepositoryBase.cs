@@ -8,7 +8,7 @@ namespace Core.DataAccess.EntityFramework
         where TContext : DbContext
     {
 
-        private readonly TContext Context;
+        protected readonly TContext Context;
 
         public EfEntityRepositoryBase(TContext context)
         {

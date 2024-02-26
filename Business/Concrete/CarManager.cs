@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Business.Abstract;
+using Business.BusinessAspects.Automapper;
 using Business.BusinessRules;
 using Business.Request.Car;
 using Business.Responses.Car;
@@ -20,7 +21,7 @@ namespace Business.Concrete
             _carBusinessRules = carBusinessRules;
             _mapper = mapper;
         }
-
+        [SecuredOperation("car.add,admin")]
         public AddCarResponse Add(AddCarRequest request)
         {
             //_carBusinessRules.CheckIfCarModelYearsValid(request.ModelYear);
@@ -64,7 +65,7 @@ namespace Business.Concrete
             return response;
 
         }
-
+        [SecuredOperation("car.delete,admin")]
         public DeleteCarResponse Delete(DeleteCarRequest request)
         {
             //Car carToDelete = _carBusinessRules.FindBrandId(id);

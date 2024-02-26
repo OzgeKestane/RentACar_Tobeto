@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Business.Abstract;
+using Business.BusinessAspects.Automapper;
 using Business.BusinessRules;
 using Business.Request.Fuel;
 using Business.Responses.Fuel;
@@ -19,7 +20,7 @@ namespace Business.Concrete
             _fuelBusinessRules = fuelBusinessRules;
             _mapper = mapper;
         }
-
+        [SecuredOperation("fuel.add,admin")]
         public AddFuelResponse Add(AddFuelRequest request)
         {
             _fuelBusinessRules.CheckIfFuelNameExists(request.Name);
@@ -32,7 +33,7 @@ namespace Business.Concrete
             AddFuelResponse response = _mapper.Map<AddFuelResponse>(fuelToAdd);
             return response;
         }
-
+        [SecuredOperation("fuel.delete,admin")]
         public DeleteFuelResponse Delete(DeleteFuelRequest request)
         {
             //Fuel fuelToDelete = _fuelBusinessRules.FindFuelId(id);
